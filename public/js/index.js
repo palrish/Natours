@@ -16,7 +16,7 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email,
         password,
@@ -37,7 +37,7 @@ const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     if (res.status === 200) {
       showAlert('success', 'Logged out successfully');
@@ -70,8 +70,8 @@ const update = async (data, type) => {
   try {
     const url =
       type === 'Password'
-        ? 'http://127.0.0.1:3000/api/v1/users/updatePassword'
-        : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+        ? '/api/v1/users/updatePassword'
+        : '/api/v1/users/updateMe';
     const res = await axios({
       method: 'PATCH',
       url,
@@ -128,7 +128,7 @@ const stripe = Stripe(
 const bookTour = async (tourId) => {
   try {
     const session = await axios(
-      `http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`
+      `/api/v1/bookings/checkout-session/${tourId}`
     );
     await stripe.redirectToCheckout({
       sessionId: session.data.session.id,
@@ -153,7 +153,7 @@ const signup = async (data) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: `http://127.0.0.1:3000/api/v1/users/signup`,
+      url: `/api/v1/users/signup`,
       data,
     });
     // console.log(res.status);
