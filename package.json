@@ -33,7 +33,4 @@
     "validator": "^13.9.0",
     "xss-clean": "^0.1.4"
   },
-  "devDependencies": {
-    "ndb": "^1.1.5"
-  }
 }
