@@ -4,11 +4,7 @@ const app = express();
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
-const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
-const compression = require('compression');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
@@ -29,21 +25,9 @@ console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
 app.use(express.json());
-app.use(mongoSanitize());
-app.use(xss());
-app.use(
-  hpp({
-    whitelist: [
-      'ratingsAverage',
-      'ratingsQuantity',
-      'price',
-      'maxGroupSize',
-      'difficulty',
-      'duration',
-    ],
-  })
-);
+
 
 const limiter = rateLimit({
   max: 100,
@@ -57,8 +41,6 @@ app.use((req, res, next) => {
   console.log('Middleware');
   next();
 });
-
-app.use(compression());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
